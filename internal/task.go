@@ -1,15 +1,17 @@
 package task
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
+	"time"
 )
 
 type task struct {
 	completed      bool
 	priority       string
-	completionDate string
-	creationDate   string
+	completionDate *time.Time
+	creationDate   *time.Time
 	description    string
 	project        string
 	context        string
@@ -24,18 +26,18 @@ func newTask(input string) task {
 		cleanedInput = input[2:]
 	}
 
-	var completionDate, creationDate string
+	var completionDate, creationDate *time.Time
 	dateRe := regexp.MustCompile(`\d{4}\-\d{2}\-\d{2}`)
 	dateMatches := dateRe.FindAllString(cleanedInput, -1)
 	if len(dateMatches) > 0 {
 		if completed {
-			completionDate = dateMatches[0]
+			completionDate = parseDate(dateMatches[0])
 
 			if len(dateMatches) > 1 {
-				creationDate = dateMatches[1]
+				creationDate = parseDate(dateMatches[1])
 			}
 		} else if len(dateMatches) > 0 {
-			creationDate = dateMatches[0]
+			creationDate = parseDate(dateMatches[0])
 		}
 	}
 	cleanedInput = dateRe.ReplaceAllLiteralString(cleanedInput, "")
@@ -77,4 +79,14 @@ func newTask(input string) task {
 		project:        project,
 		context:        context,
 	}
+}
+
+func parseDate(dateStr string) *time.Time {
+	parsedDate, err := time.Parse("2024-12-31", dateStr)
+	if err != nil {
+		fmt.Println("Error parsing date:", err)
+		return nil
+	}
+
+	return &parsedDate
 }

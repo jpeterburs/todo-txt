@@ -2,6 +2,7 @@ package task
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -13,6 +14,9 @@ func TestNewTask(t *testing.T) {
 		expectedStruct task
 	}
 
+	// nil *time.Time pointer
+	var nilTime *time.Time
+
 	for _, scenario := range []testCases{
 		{
 			description: "a normal task",
@@ -20,8 +24,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      false,
 				priority:       "",
-				completionDate: "",
-				creationDate:   "",
+				completionDate: nilTime,
+				creationDate:   nilTime,
 				description:    "write tests",
 				project:        "",
 				context:        "",
@@ -33,8 +37,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      false,
 				priority:       "",
-				completionDate: "",
-				creationDate:   "",
+				completionDate: nilTime,
+				creationDate:   nilTime,
 				description:    "finish task struct",
 				project:        "todo-txt",
 				context:        "",
@@ -46,8 +50,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      false,
 				priority:       "",
-				completionDate: "",
-				creationDate:   "",
+				completionDate: nilTime,
+				creationDate:   nilTime,
 				description:    "order pizza",
 				project:        "",
 				context:        "pizza-place",
@@ -59,8 +63,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      false,
 				priority:       "A",
-				completionDate: "",
-				creationDate:   "",
+				completionDate: nilTime,
+				creationDate:   nilTime,
 				description:    "implement functions",
 				project:        "",
 				context:        "",
@@ -72,8 +76,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      true,
 				priority:       "",
-				completionDate: "2024-08-06",
-				creationDate:   "",
+				completionDate: parseDate("2024-08-06"),
+				creationDate:   nilTime,
 				description:    "write another test",
 				project:        "",
 				context:        "",
@@ -85,8 +89,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      true,
 				priority:       "B",
-				completionDate: "2024-08-06",
-				creationDate:   "",
+				completionDate: parseDate("2024-08-06"),
+				creationDate:   nilTime,
 				description:    "call mom",
 				project:        "",
 				context:        "",
@@ -98,8 +102,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      false,
 				priority:       "",
-				completionDate: "",
-				creationDate:   "2024-01-01",
+				completionDate: nilTime,
+				creationDate:   parseDate("2024-01-01"),
 				description:    "make new year resolution",
 				project:        "",
 				context:        "",
@@ -111,8 +115,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      false,
 				priority:       "A",
-				completionDate: "",
-				creationDate:   "2024-02-01",
+				completionDate: nilTime,
+				creationDate:   parseDate("2024-02-01"),
 				description:    "bake cake",
 				project:        "",
 				context:        "",
@@ -124,8 +128,8 @@ func TestNewTask(t *testing.T) {
 			expectedStruct: task{
 				completed:      true,
 				priority:       "",
-				completionDate: "2024-03-31",
-				creationDate:   "2024-01-01",
+				completionDate: parseDate("2024-03-31"),
+				creationDate:   parseDate("2024-01-01"),
 				description:    "hide easter eggs for kids",
 				project:        "",
 				context:        "",
