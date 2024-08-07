@@ -23,6 +23,19 @@ func TestNewTask(t *testing.T) {
 				completionDate: "",
 				creationDate:   "",
 				description:    "write tests",
+				project:        "",
+			},
+		},
+		{
+			description: "a task with a project",
+			input:       "finish task struct +todo-txt",
+			expectedStruct: task{
+				completed:      false,
+				priority:       "",
+				completionDate: "",
+				creationDate:   "",
+				description:    "finish task struct",
+				project:        "todo-txt",
 			},
 		},
 		{
@@ -34,6 +47,7 @@ func TestNewTask(t *testing.T) {
 				completionDate: "",
 				creationDate:   "",
 				description:    "implement functions",
+				project:        "",
 			},
 		},
 		{
@@ -45,6 +59,7 @@ func TestNewTask(t *testing.T) {
 				completionDate: "2024-08-06",
 				creationDate:   "",
 				description:    "write another test",
+				project:        "",
 			},
 		},
 		{
@@ -56,6 +71,7 @@ func TestNewTask(t *testing.T) {
 				completionDate: "2024-08-06",
 				creationDate:   "",
 				description:    "call mom",
+				project:        "",
 			},
 		},
 		{
@@ -67,6 +83,7 @@ func TestNewTask(t *testing.T) {
 				completionDate: "",
 				creationDate:   "2024-01-01",
 				description:    "make new year resolution",
+				project:        "",
 			},
 		},
 		{
@@ -78,6 +95,7 @@ func TestNewTask(t *testing.T) {
 				completionDate: "",
 				creationDate:   "2024-02-01",
 				description:    "bake cake",
+				project:        "",
 			},
 		},
 		{
@@ -89,6 +107,7 @@ func TestNewTask(t *testing.T) {
 				completionDate: "2024-03-31",
 				creationDate:   "2024-01-01",
 				description:    "hide easter eggs for kids",
+				project:        "",
 			},
 		},
 	} {

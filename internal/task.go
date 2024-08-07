@@ -11,6 +11,7 @@ type task struct {
 	completionDate string
 	creationDate   string
 	description    string
+	project        string
 }
 
 func newTask(input string) task {
@@ -48,11 +49,24 @@ func newTask(input string) task {
 		cleanedInput = prioRe.ReplaceAllString(cleanedInput, "")
 	}
 
+	projectRe := regexp.MustCompile(`\+\S+`)
+	projectMatch := projectRe.FindStringSubmatch(cleanedInput)
+	var project string
+	if len(projectMatch) == 1 {
+		project = projectMatch[0][1:]
+		cleanedInput = projectRe.ReplaceAllLiteralString(cleanedInput, "")
+	}
+
+	cleanedInput = strings.TrimSpace(cleanedInput)
+	words := strings.Fields(cleanedInput)
+	cleanedInput = strings.Join(words, " ")
+
 	return task{
 		completed:      completed,
 		priority:       priority,
 		completionDate: completionDate,
 		creationDate:   creationDate,
 		description:    cleanedInput,
+		project:        project,
 	}
 }
