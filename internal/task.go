@@ -43,24 +43,24 @@ func newTask(input string) task {
 	prioRe := regexp.MustCompile(`\((.)\)`)
 	prioMatch := prioRe.FindStringSubmatch(cleanedInput)
 	var priority string
-	if len(prioMatch) > 1 {
+	if len(prioMatch) == 2 {
 		priority = prioMatch[1]
 		cleanedInput = prioRe.ReplaceAllString(cleanedInput, "")
 	}
 
 	projectRe := regexp.MustCompile(`\+\S+`)
-	projectMatch := projectRe.FindStringSubmatch(cleanedInput)
+	projectMatch := projectRe.FindString(cleanedInput)
 	var project string
-	if len(projectMatch) == 1 {
-		project = projectMatch[0][1:]
+	if projectMatch != "" {
+		project = projectMatch[1:]
 		cleanedInput = projectRe.ReplaceAllLiteralString(cleanedInput, "")
 	}
 
 	contextRe := regexp.MustCompile(`\@\S+`)
-	contextMatch := contextRe.FindStringSubmatch(cleanedInput)
+	contextMatch := contextRe.FindString(cleanedInput)
 	var context string
-	if len(contextMatch) == 1 {
-		context = contextMatch[0][1:]
+	if contextMatch != "" {
+		context = contextMatch[1:]
 		cleanedInput = contextRe.ReplaceAllLiteralString(cleanedInput, "")
 	}
 
