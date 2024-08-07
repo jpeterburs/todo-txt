@@ -23,25 +23,23 @@ func newTask(input string) task {
 		cleanedInput = input[2:]
 	}
 
-	var completionDate string
-	if completed {
-		completionDateRe := regexp.MustCompile(`\d{4}\-\d{2}\-\d{2}\s`)
-		completionDateMatch := completionDateRe.FindStringSubmatch(cleanedInput)
-		if len(completionDateMatch) >= 1 {
-			completionDate = strings.Join(completionDateMatch, "")[:10]
-			cleanedInput = cleanedInput[11:]
+	var completionDate, creationDate string
+	dateRe := regexp.MustCompile(`\d{4}\-\d{2}\-\d{2}`)
+	dateMatches := dateRe.FindAllString(cleanedInput, -1)
+	if len(dateMatches) > 0 {
+		if completed {
+			completionDate = dateMatches[0]
+
+			if len(dateMatches) > 1 {
+				creationDate = dateMatches[1]
+			}
+		} else if len(dateMatches) > 0 {
+			creationDate = dateMatches[0]
 		}
 	}
+	cleanedInput = dateRe.ReplaceAllLiteralString(cleanedInput, "")
 
-	var creationDate string
-	creationDateRe := regexp.MustCompile(`\d{4}\-\d{2}\-\d{2}\s`)
-	creationDateMatch := creationDateRe.FindStringSubmatch(cleanedInput)
-	if len(creationDateMatch) >= 1 {
-		creationDate = strings.Join(creationDateMatch, "")[:10]
-		cleanedInput = cleanedInput[11:]
-	}
-
-	prioRe := regexp.MustCompile(`\((.)\)\s`)
+	prioRe := regexp.MustCompile(`\((.)\)`)
 	prioMatch := prioRe.FindStringSubmatch(cleanedInput)
 	var priority string
 	if len(prioMatch) > 1 {
