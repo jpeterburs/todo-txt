@@ -12,6 +12,7 @@ type task struct {
 	creationDate   string
 	description    string
 	project        string
+	context        string
 }
 
 func newTask(input string) task {
@@ -55,6 +56,14 @@ func newTask(input string) task {
 		cleanedInput = projectRe.ReplaceAllLiteralString(cleanedInput, "")
 	}
 
+	contextRe := regexp.MustCompile(`\@\S+`)
+	contextMatch := contextRe.FindStringSubmatch(cleanedInput)
+	var context string
+	if len(contextMatch) == 1 {
+		context = contextMatch[0][1:]
+		cleanedInput = contextRe.ReplaceAllLiteralString(cleanedInput, "")
+	}
+
 	cleanedInput = strings.TrimSpace(cleanedInput)
 	words := strings.Fields(cleanedInput)
 	cleanedInput = strings.Join(words, " ")
@@ -66,5 +75,6 @@ func newTask(input string) task {
 		creationDate:   creationDate,
 		description:    cleanedInput,
 		project:        project,
+		context:        context,
 	}
 }
