@@ -7,17 +7,17 @@ import (
 	"time"
 )
 
-type task struct {
-	completed      bool
-	priority       string
-	completionDate *time.Time
-	creationDate   *time.Time
-	description    string
-	project        string
-	context        string
+type Task struct {
+	Completed      bool
+	Priority       string
+	CompletionDate *time.Time
+	CreationDate   *time.Time
+	Description    string
+	Project        string
+	Context        string
 }
 
-func newTask(input string) task {
+func NewTask(input string) Task {
 	cleanedInput := input
 
 	completed := false
@@ -70,14 +70,14 @@ func newTask(input string) task {
 	words := strings.Fields(cleanedInput)
 	cleanedInput = strings.Join(words, " ")
 
-	return task{
-		completed:      completed,
-		priority:       priority,
-		completionDate: completionDate,
-		creationDate:   creationDate,
-		description:    cleanedInput,
-		project:        project,
-		context:        context,
+	return Task{
+		Completed:      completed,
+		Priority:       priority,
+		CompletionDate: completionDate,
+		CreationDate:   creationDate,
+		Description:    cleanedInput,
+		Project:        project,
+		Context:        context,
 	}
 }
 
