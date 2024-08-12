@@ -82,7 +82,8 @@ func NewTask(input string) Task {
 }
 
 func parseDate(dateStr string) *time.Time {
-	parsedDate, err := time.Parse("2024-12-31", dateStr)
+	layout := "2006-01-02"
+	parsedDate, err := time.Parse(layout, dateStr)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)
 		return nil
